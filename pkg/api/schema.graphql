@@ -1,0 +1,46 @@
+
+type Query {
+    assets: [Asset!]!
+    projects: [Project!]!
+}
+
+type Asset {
+  id: ID!
+  filename: String!
+  title: String!
+  genre: String!
+  extracts: Extracts!
+  ratings: Ratings!
+  copyright: Copyright!
+  referenceCopies: [String!]
+  thumbnail: String
+}
+
+type Extracts {
+    available: [Int!]
+    preselected: [Int!]
+}
+
+type Ratings {
+    difficulty: Int!
+    ensemblePlayability: Int!
+}
+
+type Copyright {
+    music: String!
+    lyrics: String!
+}
+
+type Project {
+    title: String!
+    productionNote: String!
+    assets: [ProjectAsset!]
+}
+
+type ProjectAsset {
+    asset: Asset!
+    rating: Int!
+    referenceCopies: [String!]
+    selectedExtracts: [Int!]
+    sortString: String!
+}
