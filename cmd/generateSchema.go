@@ -12,7 +12,7 @@ var generateSchemaCmd = &cobra.Command{
 	Use:   "generate-schema",
 	Short: "Produces the GraphQL schema as JSON",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		s, err := api.NewServer()
+		s, err := api.NewServer("", nil)
 		if err != nil {
 			return err
 		}

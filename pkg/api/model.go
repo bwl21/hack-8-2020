@@ -4,13 +4,14 @@ package api
 type Asset struct {
 	ID              string    `graphql:"id"`
 	Filename        string    `graphql:"filename"`
+	Path            string    `graphql:"path"`
 	Title           string    `graphql:"title"`
 	Genre           string    `graphql:"genre"`
 	Extracts        Extracts  `graphql:"extracts"`
 	Ratings         Ratings   `graphql:"ratings"`
 	Copyright       Copyright `graphql:"copyright"`
 	ReferenceCopies []string  `graphql:"referenceCopies"`
-	Thumbnail       string    `graphql:"thumbnail"`
+	Media           Media     `graphql:"media"`
 }
 
 // Extracts are a collection of voices
@@ -45,4 +46,10 @@ type ProjectAsset struct {
 	ReferenceCopies  []string `graphql:"referenceCopies"`
 	SelectedExtracts []int    `graphql:"selectedExtracts"`
 	SortString       string   `graphql:"sortString"`
+}
+
+// Media is downloadable URLs pointing to various variants of this asset
+type Media struct {
+	Thumbnail string `graphql:"thumbnail"`
+	Self      string `graphql:"self"`
 }

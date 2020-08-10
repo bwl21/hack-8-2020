@@ -2,14 +2,23 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/spf13/cobra"
 	"os"
+
+	"github.com/sirupsen/logrus"
+	"github.com/spf13/cobra"
 )
+
+var verbose bool
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "zupfmanager",
 	Short: "Zupfmanager manages harp score sheets",
+	PersistentPreRun: func(cmd *cobra.Command, args []string) {
+		if verbose {
+			logrus.SetLevel(logrus.DebugLevel)
+		}
+	},
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -22,5 +31,5 @@ func Execute() {
 }
 
 func init() {
-
+	rootCmd.PersistentFlags().BoolVarP(&verbose, "verbose", "v", false, "enables verbose logging")
 }

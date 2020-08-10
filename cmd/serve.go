@@ -4,6 +4,7 @@ package cmd
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
@@ -11,6 +12,7 @@ import (
 
 	rice "github.com/GeertJohan/go.rice"
 	"github.com/bwl21/zupfmanager/pkg/api"
+	"github.com/bwl21/zupfmanager/pkg/zupfmanager"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
@@ -25,8 +27,25 @@ var serveCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
+		baseURL, _ := cmd.Flags().GetString("base-url")
+		if baseURL == "" {
+			baseURL = cfg.BaseURL
+		}
 
-		apisrv, err := api.NewServer()
+		var assets api.AssetStore
+		switch cfg.AssetStore.Kind {
+		case assetStoreLocal:
+			if cfg.AssetStore.LocalStore == nil {
+				return fmt.Errorf("local asset store is missing its configuration")
+			}
+			assets = &zupfmanager.LocalAssetStore{
+				Locations: cfg.AssetStore.LocalStore.Locations,
+			}
+		default:
+			return fmt.Errorf("unknown asset store kind %v", cfg.AssetStore.Kind)
+		}
+
+		apisrv, err := api.NewServer(baseURL, assets)
 		if err != nil {
 			return err
 		}
@@ -90,7 +109,23 @@ func (w *interceptResponseWriter) Write(p []byte) (n int, err error) {
 }
 
 type serverConfig struct {
-	Addr string `json:"address"`
+	Addr    string `json:"address"`
+	BaseURL string `json:"baseURL"`
+
+	AssetStore struct {
+		Kind       assetStoreKind    `json:"kind"`
+		LocalStore *localStoreConfig `json:"local"`
+	} `json:"assets"`
+}
+
+type assetStoreKind string
+
+const (
+	assetStoreLocal assetStoreKind = "local"
+)
+
+type localStoreConfig struct {
+	Locations []string `json:"locations"`
 }
 
 func getConfig(fn string) (*serverConfig, error) {
@@ -113,4 +148,5 @@ func init() {
 	rootCmd.AddCommand(serveCmd)
 
 	serveCmd.Flags().String("debug-proxy-addr", "", "bypass the webui server with this proxy")
+	serveCmd.Flags().String("base-url", "", "base URL where this service is available at")
 }

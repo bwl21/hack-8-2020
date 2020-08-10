@@ -1,0 +1,12 @@
+
+query Asset($filename: string!) {
+    asset(filename: $filename) {
+        id
+        title
+        filename
+        path
+        media {
+            self
+        }
+    }
+}

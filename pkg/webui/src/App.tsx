@@ -10,11 +10,17 @@ import {
 import { AssetsView } from './components/AssetsView';
 import { ApplicationFrame } from './components/ApplicationFrame';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
+import { AssetView, AssetViewProps } from './components/AssetView';
 
 const styles = {
 };
 
 interface AppProps extends WithStyles {}
+
+const AssetViewWithFilename: React.FunctionComponent<Partial<AssetViewProps>> = props => {
+    const {filename} = useParams();
+    return <AssetView filename={filename} {...props} />
+}
 
 const AppImpl: React.FunctionComponent<AppProps> = (props) => {
     const client = new ApolloClient({
@@ -28,7 +34,9 @@ const AppImpl: React.FunctionComponent<AppProps> = (props) => {
                     <Route path="/assets">
                         <AssetsView />
                     </Route>
-                    <Route path="/asset/:id"></Route>
+                    <Route path="/asset/:filename">
+                        <AssetViewWithFilename />
+                    </Route>
                     
                     <Route path="/projects"></Route>
                     <Route path="/project/:id"></Route>

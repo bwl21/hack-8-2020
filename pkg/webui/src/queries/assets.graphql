@@ -2,6 +2,8 @@
 query Assets {
     assets {
         id
+        title
         filename
+        path
     }
 }

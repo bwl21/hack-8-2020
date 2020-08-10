@@ -93,6 +93,38 @@
             "deprecationReason": ""
           },
           {
+            "name": "media",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Media",
+                "ofType": null
+              }
+            },
+            "isDeprecated": true,
+            "deprecationReason": ""
+          },
+          {
+            "name": "path",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "string",
+                "ofType": null
+              }
+            },
+            "isDeprecated": true,
+            "deprecationReason": ""
+          },
+          {
             "name": "ratings",
             "description": "",
             "args": [],
@@ -127,22 +159,6 @@
                     "ofType": null
                   }
                 }
-              }
-            },
-            "isDeprecated": true,
-            "deprecationReason": ""
-          },
-          {
-            "name": "thumbnail",
-            "description": "",
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "string",
-                "ofType": null
               }
             },
             "isDeprecated": true,
@@ -261,6 +277,49 @@
                     "ofType": null
                   }
                 }
+              }
+            },
+            "isDeprecated": true,
+            "deprecationReason": ""
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "Media",
+        "description": "",
+        "fields": [
+          {
+            "name": "self",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "string",
+                "ofType": null
+              }
+            },
+            "isDeprecated": true,
+            "deprecationReason": ""
+          },
+          {
+            "name": "thumbnail",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "string",
+                "ofType": null
               }
             },
             "isDeprecated": true,
@@ -451,6 +510,33 @@
         "name": "Query",
         "description": "",
         "fields": [
+          {
+            "name": "asset",
+            "description": "",
+            "args": [
+              {
+                "name": "filename",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "string",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Asset",
+              "ofType": null
+            },
+            "isDeprecated": true,
+            "deprecationReason": ""
+          },
           {
             "name": "assets",
             "description": "",
