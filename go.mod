@@ -3,6 +3,7 @@ module github.com/bwl21/zupfmanager
 go 1.14
 
 require (
+	github.com/GeertJohan/go.rice v1.0.0
 	github.com/friendsofgo/graphiql v0.2.2
 	github.com/graphql-go/graphql v0.7.9 // indirect
 	github.com/kylelemons/godebug v1.1.0 // indirect

@@ -40,6 +40,15 @@ func (s *Server) buildSchema() error {
 	return nil
 }
 
+// SchemaJSON returns the GraphQL schema as JSON
+func (s *Server) SchemaJSON() ([]byte, error) {
+	builder := schemabuilder.NewSchema()
+	s.registerQuery(builder)
+	s.registerMutation(builder)
+
+	return introspection.ComputeSchemaJSON(*builder)
+}
+
 func (s *Server) registerQuery(builder *schemabuilder.Schema) {
 	q := builder.Query()
 	q.FieldFunc("assets", func() []*Asset {

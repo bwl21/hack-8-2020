@@ -1,0 +1,7 @@
+
+query Assets {
+    assets {
+        id
+        filename
+    }
+}

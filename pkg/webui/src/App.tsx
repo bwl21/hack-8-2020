@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import { AssetsView } from './components/AssetsView';
 import { ApplicationFrame } from './components/ApplicationFrame';
+import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 
 const styles = {
 };
@@ -16,21 +17,27 @@ const styles = {
 interface AppProps extends WithStyles {}
 
 const AppImpl: React.FunctionComponent<AppProps> = (props) => {
-    return <ApplicationFrame>
-        <Router>
-            <Switch>
-                <Route path="/assets">
-                    <AssetsView />
-                </Route>
-                <Route path="/asset/:id"></Route>
-                
-                <Route path="/projects"></Route>
-                <Route path="/project/:id"></Route>
+    const client = new ApolloClient({
+        uri: '/graphql',
+        cache: new InMemoryCache()
+    });
+    return <ApolloProvider client={client}>
+            <ApplicationFrame>
+            <Router>
+                <Switch>
+                    <Route path="/assets">
+                        <AssetsView />
+                    </Route>
+                    <Route path="/asset/:id"></Route>
+                    
+                    <Route path="/projects"></Route>
+                    <Route path="/project/:id"></Route>
 
-                <Route path="/"></Route>
-            </Switch>
-        </Router>
-    </ApplicationFrame>
+                    <Route path="/"></Route>
+                </Switch>
+            </Router>
+        </ApplicationFrame>
+    </ApolloProvider>
 };
 
 const App = withStyles(styles)(AppImpl);
