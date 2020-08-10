@@ -1,3 +1,19 @@
+ports:
+  - port: 8080
+    onOpen: open-browser
+  - port: 3000-3001
+    onOpen: ignore
+tasks:
+  - init: go get -v ./...
+    command: |
+      gp await-port 3000
+      go run main.go serve --debug-proxy-addr http://localhost:3000 example-config.json -v --base-url $(gp url 8080)
+  - init: |
+      cd pkg/webui
+      yarn
+    command: |
+      yarn start
+    openMode: split-right
 vscode:
   extensions:
     - Prisma.vscode-graphql@0.2.14:hofLTU1qSsbqFT6C8sxyiQ==
